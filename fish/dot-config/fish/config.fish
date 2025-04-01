@@ -8,7 +8,7 @@ if status is-interactive
     bind \cr _atuin_bind_up
 
     # kube
-    set -gx KUBECONFIG "$HOME/.kube/config:$HOME/.kube/prod_config"
+    set -gx KUBECONFIG "$HOME/.kube/config:$HOME/.kube/prod_eu_01_config"
 
     # direnv
     direnv hook fish | source
