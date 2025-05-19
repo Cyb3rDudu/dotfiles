@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+# Find all staged Go files (added, copied, modified)
+gofiles=$(git diff --cached --name-only --diff-filter=ACM | grep '\.go$' || true)
+
+if [ -z "$gofiles" ]; then
+  exit 0
+fi
+
+echo "Running gofmt (auto-fix)..."
+for file in $gofiles; do
+  gofmt -w "$file"
+  git add "$file"
+done
+
+if command -v golangci-lint >/dev/null 2>&1; then
+  echo "Running golangci-lint..."
+  golangci-lint run $gofiles
+else
+  echo "golangci-lint not found, skipping lint."
+fi
