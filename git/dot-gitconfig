@@ -1,0 +1,15 @@
+# This is Git's per-user configuration file.
+[user]
+	name = jamu85
+	email = jamu85@icloud.com
+# Please adapt and uncomment the following lines:
+#	name = Jan Mueller
+#	email = jamu85@icloud.com
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+[core]
+	excludesfile = /Users/dudu/.gitignore_global
+	hooksPath = /Users/dudu/.config/git/hooks
