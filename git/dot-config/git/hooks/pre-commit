@@ -16,7 +16,7 @@ done
 
 if command -v golangci-lint >/dev/null 2>&1; then
   echo "Running golangci-lint..."
-  golangci-lint run $gofiles
+  golangci-lint run ./...
 else
   echo "golangci-lint not found, skipping lint."
 fi
