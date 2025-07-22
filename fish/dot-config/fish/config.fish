@@ -10,6 +10,9 @@ if status is-interactive
     # kube
     set -gx KUBECONFIG "$HOME/.kube/config:$HOME/.kube/prod_eu_01_config:$HOME/.kube/theia-dev"
 
+    # brew
+    set -x DYLD_LIBRARY_PATH /opt/homebrew/opt/zlib/lib $DYLD_LIBRARY_PATH
+
     # direnv
     direnv hook fish | source
 
