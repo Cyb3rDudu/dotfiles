@@ -1,0 +1,47 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // UI & defaults
+  "theme": "tokyonight",
+  // Fallback model for ad-hoc chats (agents below can override)
+  "model": "anthropic/claude-sonnet-4-20250514",
+  "autoupdate": true,
+
+
+    "agent": {
+      "orchestrator": {
+        "model": "openrouter/google/gemini-2.5-pro"
+      },
+      "system-architect": {
+        "model": "opencode/grok-code"
+      }
+    },
+  // ===========================
+  // MCP Servers
+  // ===========================
+  "mcp": {
+    "code-index-mcp": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "uvx",
+        "--from",
+        "code-index-mcp",
+        "code-index-mcp",
+        "start",
+        "--stdio"
+      ],
+      "environment": {
+        // Index the current working directory by default (good for global config)
+        "CODE_INDEX_MCP_EMBED_PATH": ".",
+
+        // Optional: tighten scope and reduce noise in big repos
+        // "CODE_INDEX_MCP_INCLUDE": "**/*.{ts,tsx,js,jsx,py,go,rs,java,kt,cs,cpp,c,h,md,sql,yaml,yml,json}",
+        // "CODE_INDEX_MCP_EXCLUDE": "**/{.git,node_modules,dist,build,.next,.turbo,.venv,.pnpm-store,target,bin,obj,coverage}/**",
+
+        // Optional: persist index cache between sessions
+        // "CODE_INDEX_CACHE_DIR": "~/.opencode/code-index-cache"
+      }
+    }
+  }
+}
