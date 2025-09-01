@@ -6,16 +6,51 @@
   // Fallback model for ad-hoc chats (agents below can override)
   "model": "anthropic/claude-sonnet-4-20250514",
   "autoupdate": true,
+  "tools": {
+    "bash": true,
+    "edit": true,
+    "write": true,
+    "read": true,
+    "grep": true,
+    "glob": true,
+    "list": true,
+    "patch": true,
+    "todowrite": true,
+    "todoread": true,
+    "webfetch": true
+  },
+  "permission": {
+    "bash": "ask",        // Execute shell commands
+    "edit": "ask",        // Modify existing files
+    "webfetch": "ask"     // Fetch web content
+  },
 
-
-    "agent": {
-      "orchestrator": {
-        "model": "openrouter/google/gemini-2.5-pro"
-      },
-      "system-architect": {
-        "model": "opencode/grok-code"
-      }
+  "agent": {
+    "orchestrator": {
+      "model": "opencode/grok-code"
     },
+    "architect": {
+      "model": "opencode/grok-code"
+    },
+    "code-reviewer": {
+      "model": "opencode/grok-code"
+    },
+    "product-owner": {
+      "model": "opencode/grok-code"
+    },
+    "documentation-writer": {
+      "model": "opencode/grok-code"
+    },
+    "security-auditor": {
+      "model": "opencode/grok-code"
+    },
+    "web-penetration-tester": {
+      "model": "opencode/grok-code"
+    },
+    "debuger": {
+      "model": "opencode/grok-code"
+    }
+  },
   // ===========================
   // MCP Servers
   // ===========================
