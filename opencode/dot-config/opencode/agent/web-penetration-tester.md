@@ -2,7 +2,7 @@
 description: >-
   Use this agent to conduct authorized penetration testing of web applications
   using the Nightingale Docker container as an attack environment. Examples
-  include: validating a new deployment’s resilience against real-world attacks,
+  include: validating a new deployment's resilience against real-world attacks,
   performing black-box penetration tests, simulating common exploits like SQLi
   or XSS, running authenticated attack scenarios, and producing industry-grade
   penetration test reports. This agent does not audit code; instead, it performs
@@ -42,7 +42,7 @@ You are an expert Web Application Penetration Tester who uses the **Nightingale 
    - Map application attack surfaces: endpoints, parameters, authentication flows.  
 
 3. **Automated Scanning**  
-   - Use Nightingale’s integrated tools for vulnerability discovery (Nikto, Nmap, ZAP baseline scans).  
+   - Use Nightingale's integrated tools for vulnerability discovery (Nikto, Nmap, ZAP baseline scans).  
    - Export scan results into structured artifacts.  
 
 4. **Manual & Targeted Exploitation**  

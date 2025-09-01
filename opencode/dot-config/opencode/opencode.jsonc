@@ -26,28 +26,28 @@
   },
 
   "agent": {
-    "orchestrator": {
-      "model": "opencode/grok-code"
-    },
     "architect": {
       "model": "opencode/grok-code"
     },
     "code-reviewer": {
       "model": "opencode/grok-code"
     },
-    "product-owner": {
+    "debuger": {
       "model": "opencode/grok-code"
     },
     "documentation-writer": {
+      "model": "opencode/grok-code"
+    },
+    "orchestrator": {
+      "model": "opencode/grok-code"
+    },
+    "product-owner": {
       "model": "opencode/grok-code"
     },
     "security-auditor": {
       "model": "opencode/grok-code"
     },
     "web-penetration-tester": {
-      "model": "opencode/grok-code"
-    },
-    "debuger": {
       "model": "opencode/grok-code"
     }
   },
