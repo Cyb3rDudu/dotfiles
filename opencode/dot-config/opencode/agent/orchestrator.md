@@ -44,6 +44,10 @@ When analyzing a request, identify which specialized agents should be engaged:
   Use when tasks involve **security review or compliance validation**.  
   Examples: scanning code for vulnerabilities, checking dependency risks, validating authentication/authorization flows, or ensuring secure configurations.
 
+- **DevOps Engineer Agent**  
+  Use when tasks involve **CI/CD, infrastructure as code, Kubernetes/runtime operations, observability, or release strategy**.  
+  Examples: optimizing GitHub Actions, adding ephemeral environments, hardening Dockerfiles/Helm, configuring rollouts/rollbacks, or defining SLOs and alerts.
+
 - **Debugger Agent**  
   Use when tasks involve **troubleshooting or fixing runtime, build, or logical errors**.  
   Examples: analyzing logs, debugging failing tests, reproducing bugs, or identifying the root cause of system errors.

@@ -32,7 +32,7 @@
     "code-reviewer": {
       "model": "opencode/grok-code"
     },
-    "debuger": {
+    "debugger": {
       "model": "opencode/grok-code"
     },
     "documentation-writer": {
@@ -45,6 +45,9 @@
       "model": "opencode/grok-code"
     },
     "security-auditor": {
+      "model": "opencode/grok-code"
+    },
+    "devops-engineer": {
       "model": "opencode/grok-code"
     },
     "web-penetration-tester": {
