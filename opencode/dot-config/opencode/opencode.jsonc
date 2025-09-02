@@ -4,7 +4,7 @@
   // UI & defaults
   "theme": "tokyonight",
   // Fallback model for ad-hoc chats (agents below can override)
-  "model": "anthropic/claude-sonnet-4-20250514",
+  "model": "anthropic/claude-3.7-sonnet",
   "autoupdate": true,
   "tools": {
     "bash": true,
@@ -26,33 +26,16 @@
   },
 
   "agent": {
-    "architect": {
-      "model": "opencode/grok-code"
-    },
-    "code-reviewer": {
-      "model": "opencode/grok-code"
-    },
-    "debugger": {
-      "model": "opencode/grok-code"
-    },
-    "documentation-writer": {
-      "model": "opencode/grok-code"
-    },
-    "orchestrator": {
-      "model": "opencode/grok-code"
-    },
-    "product-owner": {
-      "model": "opencode/grok-code"
-    },
-    "security-auditor": {
-      "model": "opencode/grok-code"
-    },
-    "devops-engineer": {
-      "model": "opencode/grok-code"
-    },
-    "web-penetration-tester": {
-      "model": "opencode/grok-code"
-    }
+    "architect": { "model": "openrouter/openai/gpt-5" },
+    "code-reviewer": { "model": "anthropic/claude-3.7-sonnet" },
+    "debugger": { "model": "anthropic/claude-sonnet-4-20250514" },
+    "documentation-writer": { "model": "openrouter/google/gemini-2.5-flash" },
+    "orchestrator": { "model": "openrouter/google/gemini-2.5-pro" },
+    "product-owner": { "model": "openrouter/google/gemini-2.5-flash" },
+    "security-auditor": { "model": "openrouter/openai/o4-mini" },
+    "devops-engineer": { "model": "anthropic/claude-3.7-sonnet" },
+    "fullstack-go-ts": { "model": "anthropic/claude-sonnet-4-20250514" },
+    "web-penetration-tester": { "model": "openrouter/openai/o4-mini" }
   },
   // ===========================
   // MCP Servers

@@ -16,6 +16,18 @@ description: >-
     assistant: "I'll use the documentation-writer agent to update the setup documentation in the `docs/` folder to reflect these changes."
   </example>
 mode: subagent
+tools:
+  write: true
+  edit: true
+  patch: false
+  todowrite: true
+  bash: true
+  webfetch: true
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # Documentation Writer Agent

@@ -9,6 +9,18 @@ description: >-
   architectural decisions need to be made or when existing systems need
   architectural review and improvement recommendations.
 mode: subagent
+tools:
+  write: false
+  edit: false
+  patch: false
+  todowrite: false
+  bash: false
+  webfetch: false
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # Architect Agent

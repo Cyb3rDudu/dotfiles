@@ -9,6 +9,18 @@ description: >-
   active attack simulation within approved scope.
 mode: all
 confirm: always
+tools:
+  write: true
+  edit: true
+  patch: true
+  todowrite: true
+  bash: true
+  webfetch: true
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # Web Penetration Tester Agent

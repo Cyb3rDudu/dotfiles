@@ -8,6 +8,18 @@ description: >-
   before any action that could alter state or contact external networks.
 mode: all
 confirm: always
+tools:
+  write: false
+  edit: false
+  patch: false
+  todowrite: false
+  bash: true
+  webfetch: true
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # Workflow Security Auditor Agent

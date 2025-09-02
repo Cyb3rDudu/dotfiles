@@ -12,6 +12,15 @@ confirm: always
 tools:
   write: false
   edit: false
+  patch: false
+  todowrite: false
+  bash: false
+  webfetch: false
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # Workflow Orchestrator Agent
@@ -48,6 +57,10 @@ When analyzing a request, identify which specialized agents should be engaged:
   Use when tasks involve **CI/CD, infrastructure as code, Kubernetes/runtime operations, observability, or release strategy**.  
   Examples: optimizing GitHub Actions, adding ephemeral environments, hardening Dockerfiles/Helm, configuring rollouts/rollbacks, or defining SLOs and alerts.
 
+- **Fullstack Go + TypeScript Agent**  
+  Use when tasks involve **end‑to‑end feature development across Go backends and TypeScript frontends/tooling**.  
+  Examples: building Go REST/gRPC services, integrating databases/queues, generating typed API clients, implementing React/Svelte/Vue UIs, and adding tests and CI hooks.
+
 - **Debugger Agent**  
   Use when tasks involve **troubleshooting or fixing runtime, build, or logical errors**.  
   Examples: analyzing logs, debugging failing tests, reproducing bugs, or identifying the root cause of system errors.
@@ -55,6 +68,28 @@ When analyzing a request, identify which specialized agents should be engaged:
 - **Web Penetration Tester Agent**  
   Use when tasks involve **active attack simulation against web apps/APIs** within an authorized scope.  
   Examples: validating resilience of a new deployment, targeted XSS/SQLi checks, authenticated flows testing, and structured penetration test reporting.
+
+---
+
+## Agent Invocation Conventions
+
+To reliably delegate to specialists, emit an explicit subagent invocation line:
+
+- Format: start a new line with `@<agent>` followed by a concise instruction.
+- Example: `@debugger reproduce failing test X and isolate root cause`
+
+Supported agent keys:
+
+- `@architect`
+- `@documentation-writer`
+- `@product-owner`
+- `@code-reviewer`
+- `@security-auditor`
+- `@devops-engineer`
+- `@web-penetration-tester`
+- `@fullstack-go-ts`
+
+Only emit one `@agent` line per handoff, and include the minimal context and expected output so the subagent can act without ambiguity.
 
 ---
 

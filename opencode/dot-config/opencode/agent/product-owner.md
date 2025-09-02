@@ -27,6 +27,18 @@ description: >-
 
   </example>
 mode: subagent
+tools:
+  write: false
+  edit: false
+  patch: false
+  todowrite: false
+  bash: true
+  webfetch: false
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # Workflow Product Owner Agent

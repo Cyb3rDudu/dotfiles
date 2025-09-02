@@ -7,6 +7,18 @@ description: >-
   metrics/logs/traces; or creating rollout/rollback strategies.
 mode: subagent
 confirm: always
+tools:
+  write: true
+  edit: true
+  patch: true
+  todowrite: false
+  bash: true
+  webfetch: false
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # DevOps Engineer Agent

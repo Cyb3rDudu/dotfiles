@@ -6,6 +6,18 @@ description: >-
   refactoring existing code, or when you want feedback on code architecture and
   design patterns.
 mode: subagent
+tools:
+  write: false
+  edit: false
+  patch: false
+  todowrite: false
+  bash: false
+  webfetch: false
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # Code Reviewer Agent

@@ -27,6 +27,18 @@ description: >-
 
   </example>
 mode: subagent
+tools:
+  write: true
+  edit: true
+  patch: true
+  todowrite: true
+  bash: true
+  webfetch: true
+  read: true
+  grep: true
+  glob: true
+  list: true
+  todoread: true
 ---
 
 # Debugger Agent
