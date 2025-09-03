@@ -24,3 +24,9 @@ if status is-interactive
         tmux attach -t base || tmux new -s base
     end
 end
+
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/dudu/.lmstudio/bin
+# End of LM Studio CLI section
+

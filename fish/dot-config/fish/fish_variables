@@ -1,6 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export --path GOPATH:/Users/dudu/\x2ego
+SETUVAR --export --path PATH:/opt/homebrew/opt/net\x2dsnmp/sbin\x1e/opt/homebrew/opt/net\x2dsnmp/bin\x1e/Users/dudu/Library/Python/3\x2e9/bin\x1e/opt/metasploit\x2dframework/bin\x1e/Users/dudu/\x2elocal/bin\x1e/opt/local/bin\x1e/opt/local/sbin\x1e/Users/dudu/\x2ego/bin\x1e/Users/dudu/\x2ecargo/bin\x1e/System/Cryptexes/App/usr/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/local/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/appleinternal/bin\x1e/Library/Apple/usr/bin\x1e/Applications/VMware\x20Fusion\x2eapp/Contents/Public\x1e/usr/local/share/dotnet\x1e\x7e/\x2edotnet/tools\x1e/usr/local/MacGPG2/bin\x1e/Library/Frameworks/Mono\x2eframework/Versions/Current/Commands\x1e/Applications/Wireshark\x2eapp/Contents/MacOS\x1e/Applications/Ghostty\x2eapp/Contents/MacOS\x1e/opt/homebrew/bin\x1e/usr/local/bin\x1e/usr/bin\x1e/bin\x1e/opt/homebrew/sbin\x1e/usr/sbin\x1e/sbin\x1e/Users/dudu/\x2elocal/bin
 SETUVAR __brew_prefix:/opt/homebrew
 SETUVAR __fish_initialized:3800
 SETUVAR _fisher_halostatue_2F_fish_2D_brew_40_v3_2E_x_files:\x7e/\x2econfig/fish/functions/has_cask\x2efish\x1e\x7e/\x2econfig/fish/functions/has_keg\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/halostatue_fish_brew\x2efish
@@ -36,4 +37,4 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/Users/dudu/Library/Python/3\x2e9/bin\x1e/opt/metasploit\x2dframework/bin\x1e/Users/dudu/\x2elocal/bin\x1e/opt/local/bin\x1e/opt/local/sbin\x1e/Users/dudu/\x2ego/bin
+SETUVAR fish_user_paths:/opt/homebrew/opt/net\x2dsnmp/sbin\x1e/opt/homebrew/opt/net\x2dsnmp/bin\x1e/Users/dudu/Library/Python/3\x2e9/bin\x1e/opt/metasploit\x2dframework/bin\x1e/Users/dudu/\x2elocal/bin\x1e/opt/local/bin\x1e/opt/local/sbin\x1e/Users/dudu/\x2ego/bin
