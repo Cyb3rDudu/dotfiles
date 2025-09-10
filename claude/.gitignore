@@ -1,0 +1,19 @@
+# Ignore everything in this folder by default
+*
+
+# Keep this .gitignore
+!.gitignore
+
+# Allow committing the Claude app config JSON
+!dot-claude.json
+
+# Allow the top-level dot-claude directory itself
+!dot-claude/
+
+# Ignore all contents under dot-claude by default
+dot-claude/*
+
+# Allow only the agents subtree
+!dot-claude/agents/
+!dot-claude/agents/**
+
