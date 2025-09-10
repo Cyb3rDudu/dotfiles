@@ -1,22 +1,42 @@
-#!/usr/bin/env bash
-set -e
+#!/usr/bin/env sh
 
-# Find all staged Go files (added, copied, modified)
+set -eu
+
+# Only act if there are staged Go files
 gofiles=$(git diff --cached --name-only --diff-filter=ACM | grep '\.go$' || true)
 
-if [ -z "$gofiles" ]; then
+if [ -z "${gofiles}" ]; then
+  # Nothing Go-related is being committed — do nothing
   exit 0
 fi
 
-echo "Running gofmt (auto-fix)..."
-for file in $gofiles; do
-  gofmt -w "$file"
-  git add "$file"
-done
-
-if command -v golangci-lint >/dev/null 2>&1; then
-  echo "Running golangci-lint..."
-  golangci-lint run ./...
+echo "pre-commit: formatting staged Go files (gofmt -s)"
+if command -v gofmt >/dev/null 2>&1; then
+  for file in $gofiles; do
+    # Format and re-stage
+    gofmt -s -w "$file"
+    git add "$file"
+  done
 else
-  echo "golangci-lint not found, skipping lint."
+  echo "pre-commit: 'gofmt' not found, skipping formatting" >&2
 fi
+
+# Lint if possible; support repos with or without 'backend' folder
+if command -v golangci-lint >/dev/null 2>&1; then
+  # Prefer module roots if present
+  if [ -f go.mod ]; then
+    echo "pre-commit: running golangci-lint at repo root"
+    golangci-lint run ./...
+  elif [ -d backend ] && [ -f backend/go.mod ]; then
+    echo "pre-commit: running golangci-lint in ./backend"
+    (cd backend && golangci-lint run ./...)
+  else
+    # As a fallback, run at root if there are Go files, even without go.mod
+    echo "pre-commit: running golangci-lint (no go.mod detected)"
+    golangci-lint run ./... || true
+  fi
+else
+  echo "pre-commit: golangci-lint not found, skipping lint"
+fi
+
+exit 0
