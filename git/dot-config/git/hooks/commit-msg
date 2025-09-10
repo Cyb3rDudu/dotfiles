@@ -13,12 +13,14 @@ if grep -Eq " into |^Merge " "$COMMIT_MSG_FILE"; then
   exit 0
 fi
 
-# Conventional Commit format with flat scope (no slashes)
+# Conventional Commit format
 # - allowed types
-# - optional single, flat scope using only [a-zA-Z0-9_.-]
 # - optional breaking change marker '!'
 # - colon + space + description
-CONVENTIONAL_COMMIT_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-zA-Z0-9_.-]+\))?(!)?: .+$'
+# Scope policy: require flat scope unless overridden
+REQUIRE_SCOPE=${REQUIRE_SCOPE:-1}
+CONVENTIONAL_COMMIT_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([A-Za-z0-9_.-]+\))?(!)?: .+$'
+REQUIRED_SCOPE_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)\([A-Za-z0-9_.-]+\)(!)?: .+$'
 
 # Extract the first non-comment, non-empty line as the subject
 subject=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$COMMIT_MSG_FILE" | head -n 1 || true)
@@ -26,6 +28,19 @@ subject=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$COMMIT_MSG_FILE" | head -n 
 if [ -z "${subject}" ]; then
   # Empty message (e.g., WIP commit with comments only) — allow
   exit 0
+fi
+
+# Reject AI assistant signature lines (Claude), even if altered
+# Matches e.g.:
+#   Generated with [Claude ...]
+#   generated with: Claude
+#   Co-authored-by: Claude <...>
+#   Co Authored By: Claude
+if grep -viE '^[[:space:]]*#' "$COMMIT_MSG_FILE" | \
+   grep -qiE '^[[:space:]]*co[- ]?authored[- ]?by:[[:space:]]*.*claude|generated[[:space:]]+with.*claude'; then
+  echo "ERROR: AI assistant signature detected (Claude)." >&2
+  echo "Please recommit without signature lines such as 'Generated with Claude …' or 'Co-Authored-By: Claude <…>'." >&2
+  exit 1
 fi
 
 # Enforce format
@@ -40,6 +55,15 @@ if ! printf "%s" "$subject" | grep -Eq "$CONVENTIONAL_COMMIT_REGEX"; then
   echo "  fix(api)!: resolve timeout issue" >&2
   echo "  docs(readme): update installation instructions" >&2
   exit 1
+fi
+
+# Require scope if enabled
+if [ "$REQUIRE_SCOPE" = "1" ]; then
+  if ! printf "%s" "$subject" | grep -Eq "$REQUIRED_SCOPE_REGEX"; then
+    echo "ERROR: Scope is required and must be flat (no '/')." >&2
+    echo "Example: feat(api): add request caching" >&2
+    exit 1
+  fi
 fi
 
 # Additional guard: reject nested scopes like backend/api

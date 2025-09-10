@@ -23,9 +23,8 @@ module.exports = {
     }
   ],
   rules: {
-    // Keep scopes optional; enforce flat/allowed chars when present
-    'scope-empty': [0, 'never'],
+    // Require scope and enforce flat/allowed chars
+    'scope-empty': [2, 'never'],
     'scope-flat': [2, 'always']
   }
 };
-
