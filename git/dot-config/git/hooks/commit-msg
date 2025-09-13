@@ -8,11 +8,6 @@ if [ -z "$COMMIT_MSG_FILE" ]; then
   exit 1
 fi
 
-# Ignore automatic merge commits or branch merges like "A into B"
-if grep -Eq " into |^Merge " "$COMMIT_MSG_FILE"; then
-  exit 0
-fi
-
 # Conventional Commit format
 # - allowed types
 # - optional breaking change marker '!'
@@ -24,6 +19,11 @@ REQUIRED_SCOPE_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|re
 
 # Extract the first non-comment, non-empty line as the subject
 subject=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$COMMIT_MSG_FILE" | head -n 1 || true)
+
+# Ignore automatic merge commits; only check the subject line
+if printf "%s" "$subject" | grep -Eq '^Merge( branch)? ' ; then
+  exit 0
+fi
 
 if [ -z "${subject}" ]; then
   # Empty message (e.g., WIP commit with comments only) — allow
