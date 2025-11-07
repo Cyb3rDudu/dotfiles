@@ -7,8 +7,8 @@
 # Allow README
 !README.md
 
-# Allow committing the Claude app config JSON
-!dot-claude.json
+# Ignore Claude runtime state - changes every session
+# dot-claude.json contains numStartups, tipsHistory, etc.
 
 # Allow the top-level dot-claude directory itself
 !dot-claude/
