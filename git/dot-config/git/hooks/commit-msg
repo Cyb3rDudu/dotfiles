@@ -14,8 +14,20 @@ fi
 # - colon + space + description
 # Scope policy: require flat scope unless overridden
 REQUIRE_SCOPE=${REQUIRE_SCOPE:-1}
-CONVENTIONAL_COMMIT_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([A-Za-z0-9_.-]+\))?(!)?: .+$'
-REQUIRED_SCOPE_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)\([A-Za-z0-9_.-]+\)(!)?: .+$'
+CONVENTIONAL_COMMIT_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert|debug)(\([A-Za-z0-9_.-]+\))?(!)?: .+$'
+REQUIRED_SCOPE_REGEX='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert|debug)\([A-Za-z0-9_.-]+\)(!)?: .+$'
+
+add_error() {
+  if [ -z "${errors:-}" ]; then
+    errors="$1"
+  else
+    errors="${errors}
+
+$1"
+  fi
+}
+
+errors=""
 
 # Extract the first non-comment, non-empty line as the subject
 subject=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$COMMIT_MSG_FILE" | head -n 1 || true)
@@ -38,38 +50,48 @@ fi
 #   Co Authored By: Claude
 if grep -viE '^[[:space:]]*#' "$COMMIT_MSG_FILE" | \
    grep -qiE '^[[:space:]]*co[- ]?authored[- ]?by:[[:space:]]*.*claude|generated[[:space:]]+with.*claude'; then
-  echo "ERROR: AI assistant signature detected (Claude)." >&2
-  echo "Please recommit without signature lines such as 'Generated with Claude …' or 'Co-Authored-By: Claude <…>'." >&2
-  exit 1
+  add_error "$(cat <<'EOF'
+ERROR: AI assistant signature detected (Claude).
+Please recommit without signature lines such as 'Generated with Claude …' or 'Co-Authored-By: Claude <…>'.
+EOF
+)"
 fi
 
 # Enforce format
 if ! printf "%s" "$subject" | grep -Eq "$CONVENTIONAL_COMMIT_REGEX"; then
-  echo "ERROR: Commit message does not follow Conventional Commits format." >&2
-  echo >&2
-  echo "Subject must be: <type>(<flat-scope>): <description>" >&2
-  echo "Valid types: feat, fix, docs, style, refactor, test, chore, build, ci, perf, revert" >&2
-  echo >&2
-  echo "Examples:" >&2
-  echo "  feat(auth): add login functionality" >&2
-  echo "  fix(api)!: resolve timeout issue" >&2
-  echo "  docs(readme): update installation instructions" >&2
-  exit 1
+  add_error "$(cat <<'EOF'
+ERROR: Commit message does not follow Conventional Commits format.
+
+Subject must be: <type>(<flat-scope>): <description>
+Valid types: feat, fix, docs, style, refactor, test, chore, build, ci, perf, revert, debug
+
+Examples:
+  feat(auth): add login functionality
+  fix(api)!: resolve timeout issue
+  docs(readme): update installation instructions
+EOF
+)"
 fi
 
 # Require scope if enabled
 if [ "$REQUIRE_SCOPE" = "1" ]; then
   if ! printf "%s" "$subject" | grep -Eq "$REQUIRED_SCOPE_REGEX"; then
-    echo "ERROR: Scope is required and must be flat (no '/')." >&2
-    echo "Example: feat(api): add request caching" >&2
-    exit 1
+    add_error "$(cat <<'EOF'
+ERROR: Scope is required and must be flat (no '/').
+Example: feat(api): add request caching
+EOF
+)"
   fi
 fi
 
 # Additional guard: reject nested scopes like backend/api
 scope=$(printf "%s" "$subject" | sed -nE 's/^[a-z]+\(([a-zA-Z0-9_.\/-]+)\):.*/\1/p') || true
 if [ -n "${scope}" ] && printf "%s" "$scope" | grep -q "/"; then
-  echo "ERROR: Scope must be flat (no '/'). Use 'api' instead of 'backend/api'." >&2
+  add_error "ERROR: Scope must be flat (no '/'). Use 'api' instead of 'backend/api'."
+fi
+
+if [ -n "$errors" ]; then
+  printf '%s\n' "$errors" >&2
   exit 1
 fi
 
