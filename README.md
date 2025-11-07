@@ -49,6 +49,17 @@ After installation, you'll need to configure your secrets:
 
 Replace template placeholders with your actual credentials.
 
+### Setting Up Starship (Nushell Only)
+
+Nushell requires a one-time Starship setup using the vendor autoload system:
+
+```bash
+nu -c 'mkdir ($nu.data-dir | path join "vendor/autoload")'
+nu -c 'starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")'
+```
+
+Other shells (Fish, Bash, Zsh) auto-configure Starship through their interactive config files.
+
 ## Directory Structure
 
 ```
