@@ -49,16 +49,44 @@ After installation, you'll need to configure your secrets:
 
 Replace template placeholders with your actual credentials.
 
-### Setting Up Starship (Nushell Only)
+### macOS XDG Setup
 
-Nushell requires a one-time Starship setup using the vendor autoload system:
+On macOS, this dotfiles repository sets XDG Base Directory variables to force applications to use `~/.config/` instead of `~/Library/Application Support/`:
 
 ```bash
-nu -c 'mkdir ($nu.data-dir | path join "vendor/autoload")'
-nu -c 'starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")'
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
 ```
 
-Other shells (Fish, Bash, Zsh) auto-configure Starship through their interactive config files.
+These are set in all shell environment configs (`01-env-darwin.*`) and will be available when launching Nushell from Fish/Bash/Zsh.
+
+**For Nushell as login shell**: A LaunchAgent plist is included in `launchagents/` and automatically symlinked by `make install`. To activate it:
+```bash
+launchctl load ~/Library/LaunchAgents/environment.plist
+```
+Then log out and log back in. See [launchagents/README.md](launchagents/README.md) and [nushell/MACOS_SETUP.md](nushell/MACOS_SETUP.md) for details.
+
+### Setting Up Nushell Tools
+
+After installation and restarting your terminal, Nushell tools are automatically configured:
+
+**Starship** - Auto-loads from `~/.local/share/nushell/vendor/autoload/starship.nu` (stow-managed)
+
+**Atuin** - Loads from `~/.local/share/atuin/init.nu` with Ctrl+R keybinding configured
+
+Both files are maintained in the dotfiles repo:
+- `nushell/dot-local/share/nushell/vendor/autoload/starship.nu` - Symlinked via stow
+- `nushell/templates/atuin-init.nu` - Template (copy to `~/.local/share/atuin/` if not exists)
+
+**Note**: The atuin directory contains user data (history database), so only `init.nu` is versioned in the repo as a template. Copy it manually if needed:
+```bash
+cp nushell/templates/atuin-init.nu ~/.local/share/atuin/init.nu
+```
+
+**macOS users**: If configs aren't loading, see [nushell/MACOS_SETUP.md](nushell/MACOS_SETUP.md) for detailed troubleshooting.
+
+Other shells (Fish, Bash, Zsh) auto-configure these tools through their interactive config files.
 
 ## Directory Structure
 
@@ -102,11 +130,14 @@ dotfiles/
 │       └── os/
 │           ├── darwin.conf  # macOS-specific (pbcopy, ifconfig)
 │           └── linux.conf   # Linux-specific (wl-copy, hostname -I)
-└── git/
-    ├── dot-gitconfig        # Main git config
-    └── dot-config/git/hooks/
-        ├── commit-msg       # Commit message validation
-        └── pre-commit       # Pre-commit checks
+├── git/
+│   ├── dot-gitconfig        # Main git config
+│   └── dot-config/git/hooks/
+│       ├── commit-msg       # Commit message validation
+│       └── pre-commit       # Pre-commit checks
+└── launchagents/            # macOS LaunchAgent (optional)
+    └── dot-Library/LaunchAgents/
+        └── environment.plist # XDG vars for login shell/apps
 ```
 
 ## Configuration Modules
@@ -214,6 +245,21 @@ Copy the template and edit with your credentials:
 ```bash
 cp fish/dot-config/fish/conf.d/99-secrets.fish.template ~/.config/fish/conf.d/99-secrets.fish
 $EDITOR ~/.config/fish/conf.d/99-secrets.fish
+```
+
+### Nushell not loading configs on macOS
+
+If Nushell isn't loading your configs or environment variables, the XDG variables may not be set before Nushell starts:
+
+1. **Restart your terminal completely** (not just exec the shell)
+2. **Verify XDG is set**: `nu -c 'echo $env.XDG_CONFIG_HOME'` should show your home `/.config`
+3. **For Nushell as login shell**: See [nushell/MACOS_SETUP.md](nushell/MACOS_SETUP.md) for LaunchAgent setup
+
+Check your config path:
+```bash
+nu -c 'echo $nu.config-path'
+# Should be: ~/.config/nushell/config.nu
+# Not: ~/Library/Application Support/nushell/config.nu
 ```
 
 ## Contributing

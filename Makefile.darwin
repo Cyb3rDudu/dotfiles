@@ -9,7 +9,12 @@ install: check-stow link setup-secrets
 	@echo "Next steps:"
 	@echo "  1. Copy secrets templates: cp fish/dot-config/fish/conf.d/99-secrets.fish.template ~/.config/fish/conf.d/99-secrets.fish"
 	@echo "  2. Edit ~/.config/fish/conf.d/99-secrets.fish with your actual credentials"
-	@echo "  3. Restart your shell or run: exec fish"
+	@echo "  3. Restart your terminal completely (not just the shell)"
+	@echo ""
+	@echo "Optional - For Nushell as login shell:"
+	@echo "  4. Load LaunchAgent: launchctl load ~/Library/LaunchAgents/environment.plist"
+	@echo "  5. Log out and log back in for XDG variables to take effect"
+	@echo "  6. See launchagents/README.md for details"
 
 check-stow:
 	@command -v stow >/dev/null 2>&1 || { \
@@ -25,6 +30,7 @@ link:
 	@stow --dotfiles -t $(HOME) nushell
 	@stow --dotfiles -t $(HOME) tmux
 	@stow --dotfiles -t $(HOME) git
+	@stow --dotfiles -t $(HOME) launchagents
 	@echo "✓ Symlinks created"
 
 setup-secrets:

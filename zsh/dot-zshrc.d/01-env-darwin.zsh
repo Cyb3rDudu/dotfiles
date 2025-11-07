@@ -2,6 +2,11 @@
 # Only loaded if running on Darwin (macOS)
 
 if [[ "$(uname)" == "Darwin" ]]; then
+    # XDG Base Directory - force macOS apps to use ~/.config instead of ~/Library/Application Support
+    export XDG_CONFIG_HOME="$HOME/.config"
+    export XDG_DATA_HOME="$HOME/.local/share"
+    export XDG_CACHE_HOME="$HOME/.cache"
+
     # Homebrew configuration
     export HOMEBREW_PREFIX=/opt/homebrew
     export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
