@@ -10,6 +10,13 @@ tmux/dot-config/tmux/plugins
 # Shell history - managed by atuin
 nushell/dot-config/nushell/history.txt
 
+# Codex - user-specific files with secrets
+codex/dot-codex/config.toml
+codex/dot-codex/auth.json
+codex/dot-codex/history.jsonl
+codex/dot-codex/sessions/
+codex/dot-codex/log/
+
 # OS-specific files
 .DS_Store
 *.swp

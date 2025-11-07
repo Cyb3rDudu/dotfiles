@@ -52,10 +52,19 @@
     "coder": { "model": "anthropic/claude-sonnet-4-20250514" },
     "web-penetration-tester": { "model": "openrouter/moonshotai/kimi-k2" }
   },
+
   // ===========================
   // MCP Servers
   // ===========================
+  // Credentials loaded from environment variables
+  // Set these in your shell's 99-secrets file:
+  //   - GITHUB_PERSONAL_ACCESS_TOKEN
+  //   - OBSIDIAN_API_KEY
+  //   - ALM_URL, ALM_USERNAME, ALM_PASSWORD
+  // ===========================
+
   "mcp": {
+    // Code indexing and search
     "code-index-mcp": {
       "type": "local",
       "enabled": true,
@@ -68,15 +77,143 @@
         "--stdio"
       ],
       "environment": {
-        // Index the current working directory by default (good for global config)
+        // Index the current working directory by default
         "CODE_INDEX_MCP_EMBED_PATH": ".",
+        // Tighten scope and reduce noise in big repos
+        "CODE_INDEX_MCP_INCLUDE": "**/*.{ts,tsx,js,jsx,py,go,rs,java,kt,cs,cpp,c,h,md,sql,yaml,yml,json}",
+        "CODE_INDEX_MCP_EXCLUDE": "**/{.git,node_modules,dist,build,.next,.turbo,.venv,.pnpm-store,target,bin,obj,coverage}/**",
+        // Persist index cache between sessions
+        "CODE_INDEX_CACHE_DIR": "~/.cache/code-index-cache"
+      }
+    },
 
-        // Optional: tighten scope and reduce noise in big repos
-        // "CODE_INDEX_MCP_INCLUDE": "**/*.{ts,tsx,js,jsx,py,go,rs,java,kt,cs,cpp,c,h,md,sql,yaml,yml,json}",
-        // "CODE_INDEX_MCP_EXCLUDE": "**/{.git,node_modules,dist,build,.next,.turbo,.venv,.pnpm-store,target,bin,obj,coverage}/**",
+    // Memory service for persistent context
+    "memory": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/Users/dudu/.local/bin/memory",
+        "server"
+      ],
+      "environment": {
+        "MCP_MEMORY_STORAGE_BACKEND": "sqlite_vec",
+        "MCP_MEMORY_SQLITE_PATH": "/Users/dudu/Library/Application Support/mcp-memory/sqlite_vec.db",
+        "MCP_MEMORY_SQLITE_PRAGMAS": "busy_timeout=15000,cache_size=20000",
+        "MCP_MEMORY_BACKUPS_PATH": "/Users/dudu/Library/Application Support/mcp-memory/backups",
+        "LOG_LEVEL": "INFO",
+        "HF_HOME": "/Users/dudu/Library/Application Support/mcp-memory/huggingface",
+        "SENTENCE_TRANSFORMERS_HOME": "/Users/dudu/Library/Application Support/mcp-memory/sentence_transformers",
+        "TRANSFORMERS_CACHE": "/Users/dudu/Library/Application Support/mcp-memory/huggingface/transformers"
+      }
+    },
 
-        // Optional: persist index cache between sessions
-        // "CODE_INDEX_CACHE_DIR": "~/.opencode/code-index-cache"
+    // Kubernetes cluster management
+    "kubernetes": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "uvx",
+        "kubernetes-mcp-server"
+      ],
+      "environment": {
+        "KUBECONFIG": "/Users/dudu/.kube/theia-dev"
+      }
+    },
+
+    // GitHub Projects integration
+    "projects": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "uvx",
+        "mcp-github-projects"
+      ],
+      "environment": {
+        // Set GITHUB_PERSONAL_ACCESS_TOKEN in your shell's 99-secrets file
+        // Create at https://github.com/settings/tokens with repo and project scopes
+        "GITHUB_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+
+    // GitHub API integration
+    "github": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "/opt/homebrew/bin/github-mcp-server",
+        "stdio"
+      ],
+      "environment": {
+        // Set GITHUB_PERSONAL_ACCESS_TOKEN in your shell's 99-secrets file
+        // Create at https://github.com/settings/tokens with repo scope
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+
+    // Obsidian notes integration
+    "mcp-obsidian": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "uvx",
+        "mcp-obsidian"
+      ],
+      "environment": {
+        // Set OBSIDIAN_API_KEY in your shell's 99-secrets file
+        // Get from Obsidian Local REST API plugin settings
+        "OBSIDIAN_API_KEY": "${OBSIDIAN_API_KEY}",
+        "OBSIDIAN_HOST": "http://127.0.0.1",
+        "OBSIDIAN_PORT": "27124"
+      }
+    },
+
+    // Browser automation
+    "browsermcp": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "npx",
+        "@browsermcp/mcp@latest"
+      ]
+    },
+
+    // Fiber optics ALM device monitoring
+    "alm-test": {
+      "type": "local",
+      "enabled": false,  // Enable when ALM device is accessible
+      "command": [
+        "/Users/dudu/Documents/Code/dark-fiber/alm-mcp-server/build/alm-mcp-server",
+        "-alm-url",
+        "${ALM_URL}",
+        "-alm-username",
+        "${ALM_USERNAME}",
+        "-alm-password",
+        "${ALM_PASSWORD}",
+        "-log-level",
+        "debug",
+        "-log-file",
+        "/tmp/alm-mcp-server.log"
+      ]
+    },
+
+    // SonarQube code quality analysis
+    "sonarqube": {
+      "type": "local",
+      "enabled": false,
+      "command": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "SONARQUBE_TOKEN",
+        "-e",
+        "SONARQUBE_ORG",
+        "mcp/sonarqube"
+      ],
+      "environment": {
+        "SONARQUBE_TOKEN": "${SONARQUBE_TOKEN}",
+        "SONARQUBE_ORG": "${SONARQUBE_ORG}"
       }
     }
   }

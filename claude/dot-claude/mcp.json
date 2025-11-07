@@ -1,0 +1,137 @@
+{
+  "mcpServers": {
+    "code-index": {
+      "command": "uvx",
+      "args": [
+        "code-index-mcp"
+      ],
+      "env": {
+        "CODE_INDEX_MCP_INCLUDE": "**/*.{ts,tsx,js,jsx,py,go,rs,java,kt,cs,cpp,c,h,md,sql,yaml,yml,json}",
+        "CODE_INDEX_MCP_EXCLUDE": "**/{.git,node_modules,dist,build,.next,.turbo,.venv,.pnpm-store,target,bin,obj,coverage}/**",
+        "CODE_INDEX_CACHE_DIR": "~/.cache/code-index-cache"
+      }
+    },
+    "memory": {
+      "command": "/Users/dudu/.local/bin/memory",
+      "args": [
+        "server"
+      ],
+      "env": {
+        "MCP_MEMORY_STORAGE_BACKEND": "sqlite_vec",
+        "MCP_MEMORY_SQLITE_PATH": "/Users/dudu/Library/Application Support/mcp-memory/sqlite_vec.db",
+        "MCP_MEMORY_SQLITE_PRAGMAS": "busy_timeout=15000,cache_size=20000",
+        "MCP_MEMORY_BACKUPS_PATH": "/Users/dudu/Library/Application Support/mcp-memory/backups",
+        "LOG_LEVEL": "INFO",
+        "HF_HOME": "/Users/dudu/Library/Application Support/mcp-memory/huggingface",
+        "SENTENCE_TRANSFORMERS_HOME": "/Users/dudu/Library/Application Support/mcp-memory/sentence_transformers",
+        "TRANSFORMERS_CACHE": "/Users/dudu/Library/Application Support/mcp-memory/huggingface/transformers"
+      }
+    },
+    "github": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "projects": {
+      "command": "uvx",
+      "args": [
+        "mcp-github-projects"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "kubernetes": {
+      "command": "uvx",
+      "args": [
+        "kubernetes-mcp-server"
+      ],
+      "env": {
+        "KUBECONFIG": "/Users/dudu/.kube/theia-dev"
+      }
+    },
+    "mcp-obsidian": {
+      "command": "uvx",
+      "args": [
+        "mcp-obsidian"
+      ],
+      "env": {
+        "OBSIDIAN_API_KEY": "${OBSIDIAN_API_KEY}",
+        "OBSIDIAN_HOST": "http://127.0.0.1",
+        "OBSIDIAN_PORT": "27124"
+      }
+    },
+    "browsermcp": {
+      "command": "npx",
+      "args": [
+        "@browsermcp/mcp@latest"
+      ]
+    },
+    "alm-test": {
+      "command": "/Users/dudu/Documents/Code/dark-fiber/alm-mcp-server/build/alm-mcp-server",
+      "args": [
+        "-alm-url",
+        "${ALM_URL}",
+        "-alm-username",
+        "${ALM_USERNAME}",
+        "-alm-password",
+        "${ALM_PASSWORD}",
+        "-log-level",
+        "debug",
+        "-log-file",
+        "/tmp/alm-mcp-server.log"
+      ]
+    },
+    "docfork": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "docfork"
+      ]
+    },
+    "freqtrade-mcp": {
+      "command": "/opt/homebrew/bin/npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "${FREQTRADE_MCP_URL:-http://10.36.0.104:8003/sse/}",
+        "--allow-http"
+      ]
+    },
+    "grafana": {
+      "command": "mcp-grafana",
+      "args": [],
+      "env": {
+        "GRAFANA_URL": "${GRAFANA_URL}",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "${GRAFANA_SERVICE_ACCOUNT_TOKEN}"
+      }
+    },
+    "sonarqube": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "SONARQUBE_TOKEN",
+        "-e",
+        "SONARQUBE_ORG",
+        "mcp/sonarqube"
+      ],
+      "env": {
+        "SONARQUBE_TOKEN": "${SONARQUBE_TOKEN}",
+        "SONARQUBE_ORG": "${SONARQUBE_ORG}"
+      }
+    }
+  }
+}

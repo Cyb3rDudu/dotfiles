@@ -4,6 +4,9 @@
 # Keep this .gitignore
 !.gitignore
 
+# Allow README
+!README.md
+
 # Allow committing the Claude app config JSON
 !dot-claude.json
 
@@ -13,7 +16,8 @@
 # Ignore all contents under dot-claude by default
 dot-claude/*
 
-# Allow only the agents subtree
+# Allow agents and MCP configuration
 !dot-claude/agents/
 !dot-claude/agents/**
+!dot-claude/mcp.json
 

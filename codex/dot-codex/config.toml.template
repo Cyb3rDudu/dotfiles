@@ -1,0 +1,84 @@
+model = "gpt-5-codex"
+model_reasoning_effort = "high"
+
+[projects."/Users/dudu/Documents/Code/dark-fiber"]
+trust_level = "trusted"
+
+[projects."/Users/dudu/Documents/Code/dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/dudu/Documents/Code/mcp-memory-service"]
+trust_level = "trusted"
+
+[projects."/Users/dudu"]
+trust_level = "trusted"
+
+[mcp_servers.code-index]
+command = "uvx"
+args = ["code-index-mcp@latest"]
+
+[mcp_servers.code-index.env]
+# tighten scope and reduce noise in big repos
+CODE_INDEX_MCP_INCLUDE = "**/*.{ts,tsx,js,jsx,py,go,rs,java,kt,cs,cpp,c,h,md,sql,yaml,yml,json}"
+CODE_INDEX_MCP_EXCLUDE = "**/{.git,node_modules,dist,build,.next,.turbo,.venv,.pnpm-store,target,bin,obj,coverage}/**"
+# persist index cache between sessions
+CODE_INDEX_CACHE_DIR = "~/.cache/code-index-cache"
+
+[mcp_servers.memory]
+command = "/Users/dudu/.local/bin/memory"
+args= [
+        "server"
+      ]
+
+[mcp_servers.memory.env]
+MCP_MEMORY_STORAGE_BACKEND = "sqlite_vec"
+MCP_MEMORY_SQLITE_PATH = "/Users/dudu/Library/Application Support/mcp-memory/sqlite_vec.db"
+MCP_MEMORY_SQLITE_PRAGMAS = "busy_timeout=15000,cache_size=20000"
+MCP_MEMORY_BACKUPS_PATH = "/Users/dudu/Library/Application Support/mcp-memory/backups"
+LOG_LEVEL = "INFO"
+# ensure embeddings always work + cache is writable
+HF_HOME = "/Users/dudu/Library/Application Support/mcp-memory/huggingface"
+SENTENCE_TRANSFORMERS_HOME = "/Users/dudu/Library/Application Support/mcp-memory/sentence_transformers"
+TRANSFORMERS_CACHE = "/Users/dudu/Library/Application Support/mcp-memory/huggingface/transformers"
+
+[mcp_servers.kubernetes]
+command = "uvx"
+args = ["kubernetes-mcp-server"]
+env = { "KUBECONFIG" = "/Users/dudu/.kube/theia-dev" }
+
+[mcp_servers.projects]
+command = "uvx"
+args = ["mcp-github-projects"]
+# GITHUB_TOKEN: Create at https://github.com/settings/tokens with repo and project scopes
+env = { "GITHUB_TOKEN" = "REPLACE_WITH_YOUR_GITHUB_TOKEN" }
+
+[mcp_servers.github]
+command = "/opt/homebrew/bin/github-mcp-server"
+args = ["stdio"]
+# GITHUB_PERSONAL_ACCESS_TOKEN: Create at https://github.com/settings/tokens with repo scope
+env = { "GITHUB_PERSONAL_ACCESS_TOKEN" = "REPLACE_WITH_YOUR_GITHUB_TOKEN" }
+
+[mcp_servers.mcp-obsidian]
+command = "uvx"
+args = ["mcp-obsidian"]
+
+[mcp_servers.mcp-obsidian.env]
+# OBSIDIAN_API_KEY: Get from Obsidian Local REST API plugin settings
+OBSIDIAN_API_KEY = "REPLACE_WITH_YOUR_OBSIDIAN_API_KEY"
+OBSIDIAN_HOST= "http://127.0.0.1"
+OBSIDIAN_PORT= "27124"
+
+[mcp_servers.browsermcp]
+command = "npx"
+args = ["@browsermcp/mcp@latest"]
+
+[mcp_servers.alm-test]
+command = "/Users/dudu/Documents/Code/dark-fiber/alm-mcp-server/build/alm-mcp-server"
+# ALM credentials: Replace with your actual ALM device URL, username, and password
+args = ["-alm-url", "REPLACE_WITH_ALM_URL", "-alm-username", "REPLACE_WITH_USERNAME", "-alm-password", "REPLACE_WITH_PASSWORD", "-log-level", "debug", "-log-file", "/tmp/alm-mcp-server.log"]
+
+[mcp_servers.sonarqube]
+command = "docker"
+args = ["run", "-i", "--rm", "-e", "SONARQUBE_TOKEN", "-e", "SONARQUBE_ORG", "mcp/sonarqube"]
+# SONARQUBE_TOKEN and SONARQUBE_ORG: Create at SonarQube settings
+env = { "SONARQUBE_TOKEN" = "REPLACE_WITH_YOUR_TOKEN", "SONARQUBE_ORG" = "REPLACE_WITH_YOUR_ORG" }
