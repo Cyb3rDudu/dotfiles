@@ -24,3 +24,4 @@ dot-claude/*
 !dot-claude/agents/**
 !dot-claude/mcp.json
 
+!theia.mcp.json
