@@ -1,0 +1,4 @@
+# Stow should ignore documentation files
+# Only stow dot-codex/ directory
+
+README\.md

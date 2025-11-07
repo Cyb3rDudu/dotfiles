@@ -4,6 +4,9 @@
 # Keep this .gitignore
 !.gitignore
 
+# Allow stow configuration
+!.stow-local-ignore
+
 # Allow README
 !README.md
 

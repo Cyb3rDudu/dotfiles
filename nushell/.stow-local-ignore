@@ -1,0 +1,6 @@
+# Stow should ignore documentation and template files
+# Only stow dot-config/ and dot-local/ directories
+
+MACOS_SETUP\.md
+templates
+README\.md

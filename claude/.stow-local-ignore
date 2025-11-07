@@ -1,0 +1,5 @@
+# Stow should ignore documentation files
+# Only stow dot-claude/ directory
+
+README\.md
+\.gitignore

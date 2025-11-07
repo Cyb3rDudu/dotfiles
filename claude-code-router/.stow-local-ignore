@@ -1,0 +1,5 @@
+# Stow should ignore documentation files
+# Only stow dot-claude-code-router/ directory
+
+README\.md
+\.gitignore
