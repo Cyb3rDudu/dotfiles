@@ -1,0 +1,7 @@
+# Bash login shell configuration
+# Sources .bashrc for interactive login shells
+
+# Source .bashrc if it exists and we're running interactively
+if [[ -f "$HOME/.bashrc" ]] && [[ $- == *i* ]]; then
+    source "$HOME/.bashrc"
+fi
