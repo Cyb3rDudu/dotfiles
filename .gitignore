@@ -1,1 +1,16 @@
+# Tmux plugins (managed by TPM)
 tmux/dot-config/tmux/plugins
+
+# Shell secrets - DO NOT COMMIT
+**/99-secrets.fish
+**/99-secrets.bash
+**/99-secrets.zsh
+**/99-secrets.nu
+
+# OS-specific files
+.DS_Store
+*.swp
+*~
+
+# Claude config with actual secrets
+claude/dot-claude.json

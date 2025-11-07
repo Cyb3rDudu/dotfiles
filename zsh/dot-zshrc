@@ -1,0 +1,17 @@
+# Main Zsh configuration
+# Sources all modular configuration files from ~/.zshrc.d/
+# Configuration is split into modular files:
+#   00-env.zsh           - Common environment variables
+#   01-env-darwin.zsh    - macOS-specific environment
+#   01-env-linux.zsh     - Linux-specific environment
+#   10-interactive.zsh   - Interactive shell tools (atuin, starship, etc.)
+#   99-secrets.zsh       - Secrets (gitignored, copy from template)
+
+# Source all .zsh files in zshrc.d/ directory
+if [ -d "$HOME/.zshrc.d" ]; then
+    for file in "$HOME/.zshrc.d"/*.zsh(N); do
+        [ -r "$file" ] && source "$file"
+    done
+fi
+
+# Additional configurations can be added here or in zshrc.d/

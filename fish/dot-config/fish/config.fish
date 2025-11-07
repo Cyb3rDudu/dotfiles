@@ -1,32 +1,11 @@
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-    set fish_greeting 
-    
-    # atuin
-    set -gx ATUIN_NOBIND "true"
-    atuin init fish | source
-    bind \cr _atuin_bind_up
+# Main Fish configuration
+# Fish automatically sources all files in ~/.config/fish/conf.d/
+# Configuration is split into modular files:
+#   00-env.fish           - Common environment variables
+#   01-env-darwin.fish    - macOS-specific environment
+#   01-env-linux.fish     - Linux-specific environment
+#   10-interactive.fish   - Interactive shell tools (atuin, starship, etc.)
+#   99-secrets.fish       - Secrets (gitignored, copy from template)
 
-    # kube
-    set -gx KUBECONFIG "$HOME/.kube/config:$HOME/.kube/prod_eu_01_config:$HOME/.kube/theia-dev"
-
-    # brew
-    set -x DYLD_LIBRARY_PATH /opt/homebrew/opt/zlib/lib $DYLD_LIBRARY_PATH
-
-    # direnv
-    direnv hook fish | source
-
-    # starship
-    starship init fish | source
-
-    # TMUX default session
-    if not set -q TMUX
-        tmux attach -t base || tmux new -s base
-    end
-end
-
-
-# Added by LM Studio CLI (lms)
-set -gx PATH $PATH /Users/dudu/.lmstudio/bin
-# End of LM Studio CLI section
+# Additional configurations can be added here or in conf.d/
 

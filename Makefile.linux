@@ -1,0 +1,53 @@
+# Linux-specific Makefile
+# Handles apt package installation and dotfile symlinking
+
+.PHONY: install link check-stow setup-secrets
+
+install: check-stow link setup-secrets
+	@echo "✓ Linux dotfiles installed successfully"
+	@echo ""
+	@echo "Next steps:"
+	@echo "  1. Copy secrets templates: cp fish/dot-config/fish/conf.d/99-secrets.fish.template ~/.config/fish/conf.d/99-secrets.fish"
+	@echo "  2. Edit ~/.config/fish/conf.d/99-secrets.fish with your actual credentials"
+	@echo "  3. Restart your shell or run: exec fish"
+
+check-stow:
+	@command -v stow >/dev/null 2>&1 || { \
+		echo "GNU Stow not found. Installing via apt..."; \
+		sudo apt-get update && sudo apt-get install -y stow; \
+	}
+
+link:
+	@echo "Symlinking dotfiles..."
+	@stow -t $(HOME) bash
+	@stow -t $(HOME) fish
+	@stow -t $(HOME) zsh
+	@stow -t $(HOME) nushell
+	@stow -t $(HOME) tmux
+	@stow -t $(HOME) git
+	@echo "✓ Symlinks created"
+
+setup-secrets:
+	@echo ""
+	@echo "Setting up secrets templates..."
+	@mkdir -p $(HOME)/.config/fish/conf.d
+	@mkdir -p $(HOME)/.bashrc.d
+	@mkdir -p $(HOME)/.zshrc.d
+	@mkdir -p $(HOME)/.config/nushell/env.d
+	@if [ ! -f $(HOME)/.config/fish/conf.d/99-secrets.fish ]; then \
+		echo "  Creating Fish secrets template..."; \
+		cp fish/dot-config/fish/conf.d/99-secrets.fish.template $(HOME)/.config/fish/conf.d/99-secrets.fish; \
+	fi
+	@if [ ! -f $(HOME)/.bashrc.d/99-secrets.bash ]; then \
+		echo "  Creating Bash secrets template..."; \
+		cp bash/bashrc.d/99-secrets.bash.template $(HOME)/.bashrc.d/99-secrets.bash; \
+	fi
+	@if [ ! -f $(HOME)/.zshrc.d/99-secrets.zsh ]; then \
+		echo "  Creating Zsh secrets template..."; \
+		cp zsh/zshrc.d/99-secrets.zsh.template $(HOME)/.zshrc.d/99-secrets.zsh; \
+	fi
+	@if [ ! -f $(HOME)/.config/nushell/env.d/99-secrets.nu ]; then \
+		echo "  Creating Nushell secrets template..."; \
+		cp nushell/dot-config/nushell/env.d/99-secrets.nu.template $(HOME)/.config/nushell/env.d/99-secrets.nu; \
+	fi
+	@echo "✓ Secrets templates created"

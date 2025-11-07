@@ -1,0 +1,18 @@
+# Main Bash configuration
+# Sources all modular configuration files from ~/.bashrc.d/
+# Configuration is split into modular files:
+#   00-env.bash           - Common environment variables
+#   01-env-darwin.bash    - macOS-specific environment
+#   01-env-linux.bash     - Linux-specific environment
+#   10-interactive.bash   - Interactive shell tools (atuin, starship, etc.)
+#   99-secrets.bash       - Secrets (gitignored, copy from template)
+
+# Source all .bash files in bashrc.d/ directory
+if [ -d "$HOME/.bashrc.d" ]; then
+    for file in "$HOME/.bashrc.d"/*.bash; do
+        [ -r "$file" ] && . "$file"
+    done
+    unset file
+fi
+
+# Additional configurations can be added here or in bashrc.d/
