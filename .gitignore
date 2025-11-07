@@ -7,6 +7,9 @@ tmux/dot-config/tmux/plugins
 **/99-secrets.zsh
 **/99-secrets.nu
 
+# Shell history - managed by atuin
+nushell/dot-config/nushell/history.txt
+
 # OS-specific files
 .DS_Store
 *.swp
