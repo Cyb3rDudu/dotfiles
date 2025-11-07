@@ -31,6 +31,10 @@ link:
 	@stow --dotfiles -t $(HOME) tmux
 	@stow --dotfiles -t $(HOME) git
 	@stow --dotfiles -t $(HOME) launchagents
+	@stow --dotfiles -t $(HOME) claude
+	@stow --dotfiles -t $(HOME) opencode
+	@stow --dotfiles -t $(HOME) codex
+	@stow --dotfiles -t $(HOME) claude-code-router
 	@echo "✓ Symlinks created"
 
 setup-secrets:
@@ -56,4 +60,18 @@ setup-secrets:
 		echo "  Creating Nushell secrets template..."; \
 		cp nushell/dot-config/nushell/env.d/99-secrets.nu.template $(HOME)/.config/nushell/env.d/99-secrets.nu; \
 	fi
+	@if [ ! -f $(HOME)/.codex/config.toml ]; then \
+		echo "  Creating Codex config template..."; \
+		cp codex/dot-codex/config.toml.template $(HOME)/.codex/config.toml; \
+	fi
+	@if [ ! -f $(HOME)/.claude-code-router/config.json ]; then \
+		echo "  Creating Claude Code Router config template..."; \
+		cp claude-code-router/dot-claude-code-router/config.json.template $(HOME)/.claude-code-router/config.json; \
+	fi
 	@echo "✓ Secrets templates created"
+	@echo ""
+	@echo "AI Tool Configs:"
+	@echo "  - OpenCode & Claude use environment variable substitution (\$${VAR})"
+	@echo "  - Codex & Claude Code Router configs created from templates"
+	@echo "  - Edit ~/.codex/config.toml and ~/.claude-code-router/config.json"
+	@echo "  - Replace REPLACE_WITH_YOUR_* placeholders with actual credentials"

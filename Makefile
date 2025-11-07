@@ -39,7 +39,7 @@ endif
 
 unlink:
 	@echo "Unlinking dotfiles..."
-	@stow --dotfiles -D -t $(HOME) bash fish zsh nushell tmux git || true
+	@stow --dotfiles -D -t $(HOME) bash fish zsh nushell tmux git launchagents claude opencode codex claude-code-router || true
 
 clean:
 	@echo "Cleaning temporary files..."
