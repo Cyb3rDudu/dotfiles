@@ -1,0 +1,9 @@
+# Runtime files
+dot-claude-code-router/.claude-code-router.pid
+dot-claude-code-router/logs/
+
+# Config with credentials - use template instead
+dot-claude-code-router/config.json
+
+# Backup files
+dot-claude-code-router/*.bak

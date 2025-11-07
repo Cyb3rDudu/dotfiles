@@ -1,0 +1,78 @@
+{
+  "LOG": true,
+  "LOG_LEVEL": "debug",
+  "CLAUDE_PATH": "",
+  "HOST": "127.0.0.1",
+  "PORT": 3456,
+  "APIKEY": "",
+  "API_TIMEOUT_MS": "600000",
+  "PROXY_URL": "",
+  "transformers": [],
+  "Providers": [
+    {
+      "name": "openrouter",
+      "api_base_url": "https://openrouter.ai/api/v1/chat/completions",
+      "api_key": "REPLACE_WITH_YOUR_OPENROUTER_API_KEY",
+      "models": [
+        "google/gemini-2.5-pro",
+        "google/gemini-2.5-flash",
+        "moonshotai/kimi-k2",
+        "anthropic/claude-sonnet-4",
+        "anthropic/claude-3.5-sonnet",
+        "anthropic/claude-3.7-sonnet:thinking"
+      ],
+      "transformer": {
+        "use": [
+          "openrouter"
+        ]
+      }
+    },
+    {
+      "name": "deepseek",
+      "api_base_url": "https://api.deepseek.com/chat/completions",
+      "api_key": "REPLACE_WITH_YOUR_DEEPSEEK_API_KEY",
+      "models": [
+        "deepseek-chat",
+        "deepseek-reasoner"
+      ],
+      "transformer": {
+        "use": [
+          "deepseek"
+        ],
+        "deepseek-chat": {
+          "use": [
+            "tooluse"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ollama",
+      "api_base_url": "http://localhost:11434/v1/chat/completions",
+      "api_key": "ollama",
+      "models": [
+        "qwen2.5-coder:latest"
+      ]
+    }
+  ],
+  "StatusLine": {
+    "enabled": false,
+    "currentStyle": "default",
+    "default": {
+      "modules": []
+    },
+    "powerline": {
+      "modules": []
+    }
+  },
+  "Router": {
+    "default": "openrouter,anthropic/claude-sonnet-4",
+    "background": "openrouter,anthropic/claude-sonnet-4",
+    "think": "deepseek,deepseek-chat",
+    "longContext": "openrouter,google/gemini-2.5-pro",
+    "longContextThreshold": 60000,
+    "webSearch": "openrouter,google/gemini-2.5-flash",
+    "image": "openrouter,google/gemini-2.5-pro"
+  },
+  "CUSTOM_ROUTER_PATH": ""
+}
