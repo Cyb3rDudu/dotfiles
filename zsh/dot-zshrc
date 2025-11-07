@@ -5,7 +5,11 @@
 #   01-env-darwin.zsh    - macOS-specific environment
 #   01-env-linux.zsh     - Linux-specific environment
 #   10-interactive.zsh   - Interactive shell tools (atuin, starship, etc.)
+#   20-aliases.zsh       - Common aliases
 #   99-secrets.zsh       - Secrets (gitignored, copy from template)
+
+# Only run in interactive shells
+[[ $- == *i* ]] || return
 
 # Source all .zsh files in zshrc.d/ directory
 if [ -d "$HOME/.zshrc.d" ]; then

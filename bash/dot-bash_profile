@@ -1,7 +1,8 @@
 # Bash login shell configuration
-# Sources .bashrc for interactive login shells
+# Sources .bashrc for all login shells
+# Interactive checks are handled in individual .bashrc.d/ files
 
-# Source .bashrc if it exists and we're running interactively
-if [[ -f "$HOME/.bashrc" ]] && [[ $- == *i* ]]; then
+# Source .bashrc if it exists
+if [[ -f "$HOME/.bashrc" ]]; then
     source "$HOME/.bashrc"
 fi
