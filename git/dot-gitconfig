@@ -11,8 +11,8 @@
 	ci = commit
 	st = status
 [core]
-	excludesfile = /Users/dudu/.gitignore_global
-	hooksPath = /Users/dudu/.config/git/hooks
+	excludesfile = ~/.gitignore_global
+	hooksPath = ~/.config/git/hooks
 	editor = vim
 [init]
-	templateDir = /Users/dudu/.config/git/
+	templateDir = ~/.config/git/

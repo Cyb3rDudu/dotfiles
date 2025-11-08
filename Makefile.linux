@@ -24,6 +24,7 @@ link:
 	@stow --dotfiles -t $(HOME) zsh
 	@stow --dotfiles -t $(HOME) nushell
 	@stow --dotfiles -t $(HOME) tmux
+	@stow --dotfiles -t $(HOME) starship
 	@stow --dotfiles -t $(HOME) git
 	@echo "✓ Symlinks created"
 
