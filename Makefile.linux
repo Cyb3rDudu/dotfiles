@@ -26,8 +26,15 @@ link:
 	@stow --dotfiles -t $(HOME) tmux
 	@stow --dotfiles -t $(HOME) starship
 	@stow --dotfiles -t $(HOME) atuin
+	@stow --dotfiles -t $(HOME) systemd
 	@stow --dotfiles -t $(HOME) git
 	@echo "✓ Symlinks created"
+	@echo ""
+	@echo "Enabling ssh-agent systemd service..."
+	@systemctl --user daemon-reload
+	@systemctl --user enable ssh-agent.service
+	@systemctl --user start ssh-agent.service
+	@echo "✓ SSH agent service enabled"
 
 setup-secrets:
 	@echo ""
