@@ -25,3 +25,4 @@ dot-claude/*
 !dot-claude/mcp.json
 
 !theia.mcp.json
+ft-strat-lab.mcp.json
