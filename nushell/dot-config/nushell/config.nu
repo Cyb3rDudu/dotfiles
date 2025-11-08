@@ -11,7 +11,7 @@ $env.config = ($env.config | upsert show_banner false)
 
 # Atuin - shell history sync
 # init.nu is stow-managed at ~/.local/share/atuin/init.nu (generated with ATUIN_NOBIND=true)
-if (which atuin | is-not-empty) {
+if (which atuin | is-not-empty) and ("~/.local/share/atuin/init.nu" | path expand | path exists) {
     source ~/.local/share/atuin/init.nu
 
     # Add Ctrl+R keybinding for atuin search
