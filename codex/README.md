@@ -6,24 +6,29 @@ This directory contains configuration for OpenAI Codex.
 
 1. **Install Codex** (if not already installed)
 
-2. **Copy template to create your config:**
+2. **Automatic config generation:**
+   - When you run `make install`, the config.toml is automatically generated from the template
+   - Credentials are sourced from `~/.bashrc.d/99-secrets.bash`
+   - No manual editing required!
+
+3. **Manual regeneration** (if needed):
    ```bash
-   cd ~/.codex
-   cp config.toml.template config.toml
+   bash codex/generate-config.sh
    ```
 
-3. **Add your credentials to config.toml:**
-   - `GITHUB_TOKEN`: Create at https://github.com/settings/tokens with `repo` and `project` scopes
-   - `OBSIDIAN_API_KEY`: Get from Obsidian Local REST API plugin settings
-   - `ALM_URL`, `ALM_USERNAME`, `ALM_PASSWORD`: Your ALM device credentials
+4. **Required credentials in your shell secrets:**
+   - `GITHUB_TOKEN` / `GITHUB_PERSONAL_ACCESS_TOKEN`: GitHub PAT with `repo` and `project` scopes
+   - `OBSIDIAN_API_KEY`: From Obsidian Local REST API plugin
+   - `ALM_URL`, `ALM_USERNAME`, `ALM_PASSWORD`: ALM device credentials
+   - `SONARQUBE_TOKEN`, `SONARQUBE_ORG`: SonarQube credentials
 
-4. **Stow will manage:**
+5. **Stow will manage:**
    - `config.toml.template` - Template with placeholder credentials
    - `version.json` - Version info
    - `internal_storage.json` - Non-sensitive storage
 
-5. **Git-ignored files** (user-specific, contain secrets):
-   - `config.toml` - Actual config with your credentials
+6. **Git-ignored files** (user-specific, contain secrets):
+   - `config.toml` - Auto-generated with your credentials
    - `auth.json` - OAuth tokens
    - `history.jsonl` - Command history
    - `sessions/` - Session data

@@ -2,3 +2,4 @@
 # Only stow dot-codex/ directory
 
 README\.md
+generate-config\.sh

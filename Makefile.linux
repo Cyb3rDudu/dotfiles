@@ -28,6 +28,10 @@ link:
 	@stow --dotfiles -t $(HOME) atuin
 	@stow --dotfiles -t $(HOME) systemd
 	@stow --dotfiles -t $(HOME) git
+	@stow --dotfiles -t $(HOME) claude
+	@stow --dotfiles -t $(HOME) opencode
+	@stow --dotfiles -t $(HOME) codex
+	@stow --dotfiles -t $(HOME) claude-code-router
 	@echo "✓ Symlinks created"
 	@echo ""
 	@echo "Enabling ssh-agent systemd service..."
@@ -59,4 +63,16 @@ setup-secrets:
 		echo "  Creating Nushell secrets template..."; \
 		cp nushell/dot-config/nushell/env.d/99-secrets.nu.template $(HOME)/.config/nushell/env.d/99-secrets.nu; \
 	fi
+	@echo "  Generating Codex config with secrets..."
+	@bash codex/generate-config.sh
+	@if [ ! -f $(HOME)/.claude-code-router/config.json ]; then \
+		echo "  Creating Claude Code Router config template..."; \
+		cp claude-code-router/dot-claude-code-router/config.json.template $(HOME)/.claude-code-router/config.json; \
+	fi
 	@echo "✓ Secrets templates created"
+	@echo ""
+	@echo "AI Tool Configs:"
+	@echo "  - OpenCode & Claude use environment variable substitution (\$${VAR})"
+	@echo "  - Codex config auto-generated from shell secrets (99-secrets.bash)"
+	@echo "  - Claude Code Router config created from template"
+	@echo "  - Edit ~/.claude-code-router/config.json and replace placeholders"
